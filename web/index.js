@@ -13,6 +13,7 @@ const chat = `<div class = "chat">
 </div>`;
 
 
+var clicked = [];
 var listOfMessages = [];
 
 function setContext(type)
@@ -61,4 +62,27 @@ function sendMessage()
 {
     var v = document.getElementById("sndMessage");
     newMessage(v.value , 'left');
+}
+
+function toggleMenu(id)
+{
+    var v = document.getElementById(id);
+    
+    if(clicked[id] == null)
+    {
+        clicked[id] = true;
+    }
+    clicked[id] = !clicked[id];
+    var state = clicked[id];
+    if(state == true)
+    {
+        if(id == "chat_menu")
+        {
+            v.innerHTML = "<div>The list of contacts will be shown here.</div>"
+            v.innerHTML += `<button onclick = 'setContext("chat")'> go to chat</button>`
+        }
+    }
+    else{
+        v.innerHTML = "";
+    }
 }

@@ -11,17 +11,24 @@
 
         <div class = "menu">
             <!-- Left menu-->
-            Menu
-            <button onclick = "setContext('chat')">CHAT</button>
-            <button onclick = "setContext('n')">TAREFAS(NOT IMPLEMENTED)</button>
-            <button onclick = "newMessage('hello' , 'right')">RECEIVE MESSAGE</button>
+            <div class = "subMenu">
+                <div style="background-color: antiquewhite;" onclick = "toggleMenu('chat_menu')">Chat (click me)</div>
+                <div id = "chat_menu"></div>
+            </div>
+            
+            <div class = "subMenu">
+                <button onclick = "setContext('n')">TAREFAS(NOT IMPLEMENTED)</button>
+            </div>
+            <div class = "subMenu">
+                <button onclick = "newMessage('hello' , 'right')">RECEIVE MESSAGE</button>
+            </div>
+            
 
 
         </div>
 
         <div class = "context" id = "ctx">
-            
-            
+        
         </div>
 
     </div>
