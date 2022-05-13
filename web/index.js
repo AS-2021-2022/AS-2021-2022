@@ -5,7 +5,7 @@ const chat_context = `<div class = "chat">
 </div>
 
 <div class = "sendBox">
-    <textarea placeholder = "Message ... " class = "sendMessage" id = "sndMessage"> </textarea>
+    <textarea placeholder = "Message ... " class = "sendMessage" id = "sndMessage"></textarea>
     <div class = "sendMessageMenu">
         <button onclick = "sendMessage()">send</button>
     </div>
@@ -36,7 +36,7 @@ const workflows_menu = `
 `
 
 var clicked = [];
-var listOfMessages = [];
+var listOfMessages = [["Example message 1" , "right"] , ["Example of a big message, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." , "right"]];
 
 function setContext(type)
 {
@@ -93,6 +93,7 @@ function sendMessage()
         if(v.value[i] != " ")
         {
             newMessage(v.value , 'left');
+            v.value = "";
             break;
         }
     }
