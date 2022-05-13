@@ -12,15 +12,18 @@
         <div class = "menu">
             <!-- Left menu-->
             <div class = "subMenu">
-                <div style="background-color: antiquewhite;" onclick = "toggleMenu('chat_menu')">Chat (click me)</div>
+                <div class = "menuHeader" onclick = "toggleMenu('chat_menu')">Chat</div>
                 <div id = "chat_menu"></div>
             </div>
             
             <div class = "subMenu">
-                <button onclick = "setContext('n')">TAREFAS(NOT IMPLEMENTED)</button>
+                <div class = "menuHeader" onclick = "toggleMenu('tasks_menu')">Tasks</div>
+                <div id = "tasks_menu"></div>
             </div>
+
             <div class = "subMenu">
-                <button onclick = "newMessage('hello' , 'right')">RECEIVE MESSAGE</button>
+                <div class = "menuHeader" onclick = "toggleMenu('workflows_menu')">Workflows</div>
+                <div id = "workflows_menu"></div>
             </div>
             
 

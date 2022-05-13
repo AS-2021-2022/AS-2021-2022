@@ -1,4 +1,4 @@
-const chat = `<div class = "chat">
+const chat_context = `<div class = "chat">
 
 <div class = "receiveBox" id = "rcvBox"> 
 
@@ -12,6 +12,28 @@ const chat = `<div class = "chat">
 </div>
 </div>`;
 
+const tasks_context = `
+    <div>Tasks context</div>
+    <div>Everything about the selected task should appear here.</div>
+`
+
+const workflows_context = `
+    <div>Everything about the selected workflow should appear here.</div>
+`
+
+const chat_menu = `
+    <div>The list of contacts will be shown here.</div>
+    <button onclick = 'setContext("chat")'> go to chat</button>
+`
+const tasks_menu = `
+    <div>A list of active / non active tasks will be shown here.</div>
+    <button onclick = 'setContext("tasks")'> go to tasks</button>
+    `
+
+const workflows_menu = `
+<div>The list of current workflows will be shown here.</div>
+<button onclick = 'setContext("workflows")'> go to workflows</button>
+`
 
 var clicked = [];
 var listOfMessages = [];
@@ -21,18 +43,23 @@ function setContext(type)
     v = document.getElementById("ctx");
     if(type == "chat")
     {
-        v.innerHTML = chat;
+        v.innerHTML = chat_context;
         displayMessages();
     }
-    else{
-        v.innerHTML = "";
+    if(type == "tasks")
+    {
+        v.innerHTML = tasks_context;
     }
+    if(type == "workflows")
+    {
+        v.innerHTML  = workflows_context;
+    }
+    
 }
 
 function displayMessage(string , from)
 {
     v = document.getElementById("rcvBox");
-    console.log((string , from));
     if(from == "left")
     {
         v.innerHTML += "<div class='messageLeft'>" + string + "</div>";
@@ -61,7 +88,14 @@ function newMessage(str , from)
 function sendMessage()
 {
     var v = document.getElementById("sndMessage");
-    newMessage(v.value , 'left');
+    for(let i=0;i<v.value.length ; i++) //avoid empty messages
+    {
+        if(v.value[i] != " ")
+        {
+            newMessage(v.value , 'left');
+            break;
+        }
+    }
 }
 
 function toggleMenu(id)
@@ -70,7 +104,7 @@ function toggleMenu(id)
     
     if(clicked[id] == null)
     {
-        clicked[id] = true;
+        clicked[id] = false;
     }
     clicked[id] = !clicked[id];
     var state = clicked[id];
@@ -78,8 +112,15 @@ function toggleMenu(id)
     {
         if(id == "chat_menu")
         {
-            v.innerHTML = "<div>The list of contacts will be shown here.</div>"
-            v.innerHTML += `<button onclick = 'setContext("chat")'> go to chat</button>`
+            v.innerHTML = chat_menu;
+        }
+        if(id == "tasks_menu")
+        {
+            v.innerHTML = tasks_menu;
+        }
+        if(id == "workflows_menu")
+        {
+            v.innerHTML = workflows_menu;
         }
     }
     else{
