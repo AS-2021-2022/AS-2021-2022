@@ -22,8 +22,7 @@ const workflows_context = `
 `
 
 const chat_menu = `
-    <div>The list of contacts will be shown here.</div>
-    <button onclick = 'setContext("chat")'> go to chat</button>
+    <div id = "contacts" class = 'contacts'></div>
 `
 const tasks_menu = `
     <div>A list of active / non active tasks will be shown here.</div>
@@ -36,7 +35,11 @@ const workflows_menu = `
 `
 
 var clicked = [];
-var listOfMessages = [["Example message 1" , "right"] , ["Example of a big message, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." , "right"]];
+var listOfMessages = [];
+function getContacts()
+{
+    return [["John Doe"] , ["Jane Doe"]];
+}
 
 function setContext(type)
 {
@@ -114,6 +117,7 @@ function toggleMenu(id)
         if(id == "chat_menu")
         {
             v.innerHTML = chat_menu;
+            setChatMenu();
         }
         if(id == "tasks_menu")
         {
@@ -126,5 +130,24 @@ function toggleMenu(id)
     }
     else{
         v.innerHTML = "";
+    }
+}
+
+function loadChat(identifier)
+{
+    if(identifier == "John Doe")
+    listOfMessages = [["John Doe chat example" , "right"]];
+    if(identifier == "Jane Doe")
+    listOfMessages = [["Jane Doe chat example" , "right"]];
+}
+
+function setChatMenu()
+{
+    data = getContacts();
+    for(let i=0;i<data.length;i++)
+    {
+        let name = data[i][0];
+        v = document.getElementById("contacts");
+        v.innerHTML += `<div class = 'contact'><div class = 'contactName' onclick="loadChat('` + name + `') ; setContext('chat')">` + name + `</div> <div class = 'contactStatus'>status</div></div>`
     }
 }
