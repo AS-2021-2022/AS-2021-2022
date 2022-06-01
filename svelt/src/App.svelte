@@ -2,8 +2,13 @@
 	
 	var sidebar_title = "";
 	let options = [];
+	let nav_active = "chat";
 	function updateSideBar(type)
 	{
+		document.getElementById(nav_active).classList.remove("active");
+		document.getElementById(type).classList.add("active");
+		nav_active = type;
+
 		getOptions(type);
 		switch(type)
 		{
@@ -18,11 +23,16 @@
 			case 'workflows':
 			sidebar_title = "workflows";
 			break;
+
+			case 'files':
+			sidebar_title = "files";
+			break;
 		}
 	}
 
 	function getOptions(type) //send http request in order to get list of options (tasks, workflows , etc...)
 	{
+		
 		options = [];
 		switch(type)
 		{
@@ -31,11 +41,15 @@
 			break;
 
 			case 'tasks':
-			options = [{name: 'contact1' , color: 'red'} , {name: 'contact2',  color:'green'}];
+			options = [{name: 'Tarefa 1' , color: 'red'} , {name: 'Tarefa 2',  color:'green'}];
+			break;
+
+			case 'workflows':
+			options = [{name: 'Workflow 1' , color: 'red'} , {name: 'Workflow 2',  color:'green'}];
 			break;
 		}
 	}
-
+	
 	
 </script>
 
@@ -48,29 +62,30 @@
 
 <main>
 	
-	<nav class="navbar navbar-expand-md navbar-dark bg-info">
+	<nav class="navbar navbar-expand-md navbar-dark bg-info active">
 		<a href="/" class="navbar-brand"><i class="bi bi-house"></i></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar6">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="navbar-collapse collapse justify-content-stretch" id="navbar6">
 			<ul class="navbar-nav">
-				<li on:click={() => updateSideBar('chat')} class="nav-item active">
-					<a class="nav-link active" href="#" >Chat<i class="bi bi-arrow-right"></i></a>
+				
+				<li on:click={() => updateSideBar('chat')} class="nav-item" id="chat">
+					<a class="nav-link" href="#">Chat<i class="bi bi-arrow-right"></i></a>
 				</li>
-				<li on:click={() => updateSideBar('tasks')} class="nav-item">
-					<a class="nav-link active" href="#" >Tasks<i class="bi bi-arrow-right"></i></a>
+				<li on:click={() => updateSideBar('tasks')} class="nav-item" id="tasks">
+					<a class="nav-link " href="#" >Tasks<i class="bi bi-arrow-right"></i></a>
 				</li>
-				<li on:click={() => updateSideBar('workflows')} class="nav-item">
-					<a class="nav-link active" href="#">Workflows<i class="bi bi-arrow-right"></i></a>
+				<li on:click={() => updateSideBar('workflows')} class="nav-item" id="workflows">
+					<a class="nav-link " href="#">Workflows<i class="bi bi-arrow-right"></i></a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="#">Files<i class="bi bi-arrow-right"></i></a>
+				<li on:click={() => updateSideBar('files')} class="nav-item" id="files">
+					<a class="nav-link " href="#">files<i class="bi bi-arrow-right"></i></a>
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-					<a class="nav-link active" href="#"> <i class="bi bi-envelope"></i>  xyz@empresa.pt</a>
+					<a class="nav-link " href="#"> <i class="bi bi-envelope"></i>  xyz@empresa.pt</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="login">Sign out <i class="bi bi-door-closed"></i></a>
@@ -89,12 +104,19 @@
 </main>
 
 <style>
+	
 	main {
 		
 		padding: 0em;
 		max-width: 240px;
 		margin: 0 auto;
 	}
+
+	.active
+	{
+		background: black;
+	}
+	
 
 	.navbar-nav > li{
   		padding-left:30px;
@@ -105,6 +127,10 @@
   		padding-top: 20px;
 		padding-bottom: 20px;
 		text-align:left;
+
+	}
+	.sidebar-content:hover{
+		background-color: grey;
 	}
 
 	.circle
