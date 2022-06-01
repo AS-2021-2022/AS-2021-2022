@@ -1,6 +1,41 @@
 <script>
 	
-	
+	var sidebar_title = "";
+	let options = [];
+	function updateSideBar(type)
+	{
+		getOptions(type);
+		switch(type)
+		{
+			case 'chat':
+			sidebar_title = "chat";
+			break;
+
+			case 'tasks':
+			sidebar_title = "tasks";
+			break;
+
+			case 'workflows':
+			sidebar_title = "workflows";
+			break;
+		}
+	}
+
+	function getOptions(type) //send http request in order to get list of options (tasks, workflows , etc...)
+	{
+		options = [];
+		switch(type)
+		{
+			case 'chat':
+			options = [{name: 'Jonh Doe' , color: 'red'} , {name: 'Jane Doe',  color:'green'}];
+			break;
+
+			case 'tasks':
+			options = [{name: 'contact1' , color: 'red'} , {name: 'contact2',  color:'green'}];
+			break;
+		}
+	}
+
 	
 </script>
 
@@ -20,13 +55,13 @@
 		</button>
 		<div class="navbar-collapse collapse justify-content-stretch" id="navbar6">
 			<ul class="navbar-nav">
-				<li class="nav-item active">
-					<a class="nav-link active" href="#">Chat<i class="bi bi-arrow-right"></i></a>
+				<li on:click={() => updateSideBar('chat')} class="nav-item active">
+					<a class="nav-link active" href="#" >Chat<i class="bi bi-arrow-right"></i></a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="#">Tasks<i class="bi bi-arrow-right"></i></a>
+				<li on:click={() => updateSideBar('tasks')} class="nav-item">
+					<a class="nav-link active" href="#" >Tasks<i class="bi bi-arrow-right"></i></a>
 				</li>
-				<li class="nav-item">
+				<li on:click={() => updateSideBar('workflows')} class="nav-item">
 					<a class="nav-link active" href="#">Workflows<i class="bi bi-arrow-right"></i></a>
 				</li>
 				<li class="nav-item">
@@ -45,7 +80,10 @@
 	</nav>
 
 	<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;height:100vh;">
-		<div class="sidebar-content"></div>
+		<div class="sidebar-content">{sidebar_title}</div>
+		{#each options as option}
+		<div class="sidebar-content">{option.name} <div class="circle" style="background-color:{option.color};"></div></div>
+		{/each}
 		
 	</div>
 </main>
@@ -67,6 +105,17 @@
   		padding-top: 20px;
 		padding-bottom: 20px;
 		text-align:left;
+	}
+
+	.circle
+	{
+		height: 25px;
+		width: 25px;
+		background-color: #bbb;
+		border-radius: 50%;
+		display: inline-block;
+		float:right;
+		
 	}
 
 	@media (min-width: 640px) {
