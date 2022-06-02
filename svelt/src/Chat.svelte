@@ -2,15 +2,44 @@
 
 
     export let userid;
-    var messages = [{'text' : 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for lorem ipsum  will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)'
-, 'position' : 'left'} , {'text' : 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for lorem ipsum  will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)' , 'position' : 'right'} , {'text' : 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for lorem ipsum  will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)'
-, 'position' : 'left'}];
+    var messages = [];
 
     
-
-    async function sendMessage()
+    /*async*/ function getMessages(depth , n)
     {
-        console.log(userid);
+       /* var dict = {"token" : "abc" ,
+                    "type"   : "getMessages",
+                    "params" : {
+                        "userid" : userid ,
+                        "depth"    : depth ,
+                        "count"   : n
+                    }
+                };
+
+        const res = await fetch('https://localhost:5000' , {
+            method: 'POST',
+            body : JSON.stringify(dict) 
+        });
+
+        const awnser = await res.json();
+        */
+
+        const awnser = {0 : {"origin" : "you" , "text" : "hello world"} , 1 : {"origin" : "target" , "text" : "Example of a message"}};
+
+        for(let i=depth+n-1;i>=depth;i--)
+        {
+            messages.push(awnser[i]);
+        }
+        
+        console.log(messages[0]);
+        console.log(messages[1]);
+
+    }
+
+    getMessages(0 , 2);
+
+     function sendMessage()
+    {
         var h = document.getElementById("message-box");
         if(h.value != "")
         {
@@ -18,18 +47,18 @@
             var dict = {"token" : "abc" ,
                     "type"  : "sendMessage" ,
                     "params": {
-                        "1" :   userid ,
-                        "2" : h.value
+                        "userid" :   userid ,
+                        "message" : h.value
                     }
                 };
-                h.value = "";    
-            const res = await fetch('https://localhost:5000' , {
+                   
+            /*const res = await fetch('https://localhost:5000' , {
                 method: 'POST',
                 body : JSON.stringify(dict)
-            })
-
-            
-           
+            });
+            */
+            messages = [...messages , {"origin" : "you" , "text" : h.value}];
+            h.value = ""; 
         }
 
         
@@ -42,10 +71,10 @@
     <div style = "overflow:auto; opacity:1.0;">
         {#each messages as message}
         <div class = "message">
-            {#if message.position == 'left'}
-            <div class = "messageLeft">{message.text}</div>
-            {:else}
+            {#if message.origin === 'you'}
             <div class = "messageRight">{message.text}</div>
+            {:else}
+            <div class = "messageLeft">{message.text}</div>
             {/if}
         </div>
         {/each}
@@ -79,13 +108,14 @@
         padding-left:20px;
         padding-right: 20px;
         border-radius: 20px;
-        background-color: rgb(58,132,255);
-        font-size: 30px;
+        background-color: #f1f1f1f1;
+        font-size: 24px;
         float:left;
         height:fit-content;
         clear:both;
         text-align: left;
-        color:white;
+        color:black;
+        overflow-wrap: anywhere;
     }
 
     .messageRight
@@ -99,25 +129,28 @@
         padding-left:20px;
         padding-right: 20px;
         border-radius: 20px;
-        background-color: #f1f1f1f1;
+        background-color: rgb(58,132,255);
         float: right;
-        font-size: 30px;
+        font-size: 24px;
         text-align: right;
-        
+        color:white;
         clear:both;
+        overflow-wrap: anywhere;
     }
 
     .message-box {
-    flex: 0 1 42px;
     width: 90%;
     background: #fff; 
     margin:2px auto;
 
-    position: relative;
+    margin-top: auto;
+    display:flex;
+    
+
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px; 
-    height:50px;
+    
     border:1px solid #ccc;
     
     }
@@ -158,5 +191,10 @@
         transition-duration: 0.3s;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
+    }
+
+    .message
+    {
+        
     }
 </style>
