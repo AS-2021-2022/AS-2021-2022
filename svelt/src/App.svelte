@@ -1,5 +1,5 @@
 <script>
-	
+	import Chat from "./Chat.svelte"
 	var sidebar_title = "";
 	let options = [];
 	let nav_active = "chat";
@@ -95,13 +95,24 @@
 		</div>
 	</nav>
 
-	<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;height:100vh;">
-		<div class="sidebar-content">{sidebar_title}</div>
-		{#each options as option}
-		<div class="sidebar-content">{option.name} <div class="circle" style="background-color:{option.color};"></div></div>
-		{/each}
-		
-	</div>
+	
+
+	<div>
+		<div style="width:280px;Text-align:left;float:left;background-color:gainsboro;">
+			<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;height:100vh;">
+				<div class="sidebar-content">{sidebar_title}</div>
+				{#each options as option}
+				<div class="sidebar-content">{option.name} <div class="circle" style="background-color:{option.color};"></div></div>
+				{/each}
+				
+			</div>
+		</div>
+		<div style="Text-align:right;Width:calc(100% - 280px);float:right">
+			{#if nav_active == "chat"}
+				<Chat></Chat>
+			{/if}
+</div>
+	
 </main>
 
 <style>
@@ -142,6 +153,12 @@
 		border-radius: 50%;
 		display: inline-block;
 		float:right;
+		
+	}
+
+	.content
+	{
+		width:10%;
 		
 	}
 
