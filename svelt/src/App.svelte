@@ -99,7 +99,7 @@
 
 	<div>
 		<div style="width:280px;Text-align:left;float:left;background-color:gainsboro;">
-			<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;height:100vh;">
+			<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;height:800px;">
 				<div class="sidebar-content">{sidebar_title}</div>
 				{#each options as option}
 				<div class="sidebar-content">{option.name} <div class="circle" style="background-color:{option.color};"></div></div>
@@ -107,9 +107,11 @@
 				
 			</div>
 		</div>
-		<div style="Text-align:right;Width:calc(100% - 280px);float:right">
+		<div style="Text-align:right;width:calc(100% - 280px);float:right;overflow:auto;height:800px;">
 			{#if nav_active == "chat"}
-				<Chat></Chat>
+		
+					<Chat></Chat>
+			
 			{/if}
 </div>
 	
