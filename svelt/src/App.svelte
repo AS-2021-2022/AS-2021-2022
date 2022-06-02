@@ -1,7 +1,9 @@
 <script>
-	import Chat from "./Chat.svelte"
+	import Chat from "./Chat.svelte";
+	import userid from "./Chat.svelte";
 	var sidebar_title = "";
 	let options = [];
+	let selected_user = "hey";
 	let nav_active = "chat";
 	function updateSideBar(type)
 	{
@@ -37,7 +39,7 @@
 		switch(type)
 		{
 			case 'chat':
-			options = [{name: 'Jonh Doe' , color: 'red'} , {name: 'Jane Doe',  color:'green'}];
+			options = [{name: 'Jonh Doe' , color: 'red' , 'id' : 0xff} , {name: 'Jane Doe',  color:'green'}];
 			break;
 
 			case 'tasks':
@@ -107,10 +109,10 @@
 				
 			</div>
 		</div>
-		<div style="Text-align:right;width:calc(100% - 280px);float:right;overflow:auto;height:800px;">
+		<div style="Text-align:right;width:calc(100% - 280px);float:right;height:800px;">
 			{#if nav_active == "chat"}
 		
-					<Chat></Chat>
+					<Chat userid = {selected_user}></Chat>
 			
 			{/if}
 </div>
