@@ -53,7 +53,7 @@ B)
 ## 5. Tasks
     5.0 getTasksList                (returns a brief list of tasks)
     5.1 getTask                     (returns selected task information)
-    5.2 sendTask                    (user creates a task)
+    5.2 assignTask                    (user creates a task)
 
 
 # detailed description of the API calls
@@ -115,16 +115,10 @@ B)
             "status" : "accepted"
         }
         
-   B)
-    
-        {
-            "status" : "rejected" ,
-            "info"   : "..."
-        }
 
-   possible info errors:
-            -> User / group ID is unknown
-            -> User does not have permission to talk with this user / group
+#### Errors
+   - User / group ID is unknown
+   - User does not have permission to talk with this user / group.
 
 
 ### 2.2 getContactMessages
@@ -134,7 +128,7 @@ B)
             "type"  : "getContactMessages",
             "params" :
             {
-                "target id" : "id received in 2.0 request" ,
+                "target_id" : "id received in 2.0 request" ,
                 "depth"   : 0 is the most recent message, 1 -> second most recent message ... ,
                 "n" : "number of messages
             }
@@ -142,7 +136,7 @@ B)
 
 #### Server response
    Returns an array of length n where messages[0] = messages[depth] , messages[n-1] = messages[depth + n - 1])
-    A)
+
     
         {
             "status" : "accepted" ,
@@ -152,10 +146,180 @@ B)
     
    origin is the person origin ID, when the origin is the user itself, origin must have the value "you"
 
-  B)
-  
-        {
-            "status" : "rejected",
-            "info"   : "error"
+#### Errors
+   - Invalid target_id
+   - Invalid token
+   - 'depth' or 'n' value out of bounds.
+
+## 3 - Files
+### 3.0 - getFilesList
+#### User request
+
+		{
+            "token" : "user_token" ,
+            "type"  : "getFilesList"
         }
-   The server should return an error when the "target_id" is unknown or when user asks for out of bounds messages.
+#### Server response
+Server must return a list of user files (all)
+
+		{
+            "status" : "accepted" ,
+            "files" : [{"id" : "file_id" ,"name" : "file_name" , "size" : "size_in_mb" , "age" : age_in_seconds} , ... , {...}]
+        }
+### 3.1 - getFile
+#### User request
+		{
+            "token" : "user_token" ,
+            "type"  : "getFile"
+            "params": 
+            {
+	            "id" : "file_id"
+            }
+        }
+  #### Server Response
+Returns a temporary url to download the selected file.
+ 
+		 {
+            "status" : "accepted" ,
+            "url" : "file_url"
+        }
+  #### Errors
+  - Invalid token
+  - Invalid file id
+  - User does not have access to this file
+
+### 3.2 sendFile
+#### User request
+		{
+	            "token" : "user_token" ,
+	            "type"  : "sendFile" ,
+	            params : 
+	            {
+					"name" : "name of the file"
+				}
+		}
+File will be sent in http POST.
+#### Server response
+		{
+			"status" : "accepted"
+		}
+#### Errors
+- Invalid token
+- Invalid file name
+-  File is insecure
+- File is too big
+
+## 4. Workflows
+### 4.1 - getWorkflows
+#### User request
+
+	{
+		"token" : "toke_id" ,
+		"type" : "getWorkflows"
+	}
+
+#### Server response
+
+	{
+		"status" : "accepted",
+		"workflows" : [
+			{"name" : "workflow_name" ,"pending" : true ,"id" : "workflow id"} ,
+			....
+			{...}]
+	}
+"pending" = true : User has pending work in the workflow.
+"pending" = false : User doesn't need to work in the workflow.
+#### Errors
+- Invalid token
+
+### 4.2 - incrementWorkflow
+#### User request
+
+	{
+		"token" : "toke_id" ,
+		"type" : "incrementWorkflow"
+		"params":
+		{
+			"name" : "file_name"
+		}
+	}
+File will be sent in http POST.
+#### Server response
+
+	{
+		"status" : "accepted"
+	}
+#### Errors
+- Invalid token
+- User doesn't have permission to advance in this workflow.
+
+## 5 - Tasks
+### 5.0 - getTasksList
+#### User request
+	{
+		"token" : "token_id" ,
+		"type" : "getTasksList"
+	}
+
+#### Server response
+	{
+		"status" : "accepted",
+		"tasks" : [{"name" : "task_name" , "id" : "task_id" , "time_left" , "minutes_left" }]
+	}
+
+#### Errors
+- Invalid token
+
+### 5.1 - getTask
+#### User request
+	{
+		"token" : "token_id" ,
+		"type" : "getTask",
+		"params" : 
+		{
+			"id" : "selected task_id"
+		}
+	}
+
+#### Server response
+	{
+		"status" : "accepted",
+		"start" : "creation_date",
+		"end" : "end_date",
+		"priority" : ... ,
+		"description" : "task_description"
+	}
+
+priority is an arbitrary string (urgent , ... )
+#### Errors
+- Invalid token
+- Invalid task ID
+
+
+### 5.2 - assignTask
+#### User request
+	{
+		"token" : "token_id" ,
+		"type" : "assignTask",
+		"params" : 
+		{
+			"name" : "task_name" ,
+			"start": "start_date",
+			"end":	"end_date",
+			"priority" : ...
+			"decription" : "task_decription"
+			(if team manager) "assignee_id" : "target_id" ,
+			(else if normal worker) "assignee_id" : "me"
+		}
+	}
+"me" should be interpreted as sender user ID.
+(Team managers are allowed to use "me" in order to assign the task to himself).
+#### Server response
+	{
+		"status" : "accepted"
+	}
+
+
+#### Errors
+- Invalid token
+- Invalid task parameter
