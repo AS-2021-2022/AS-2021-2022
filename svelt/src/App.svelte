@@ -1,9 +1,10 @@
 <script>
 	import Chat from "./Chat.svelte";
 	import userid from "./Chat.svelte";
+	import Tasks from "./Tasks.svelte";
 	var sidebar_title = "";
 	let options = [];
-	let selected_user = "hey";
+	let selected_user = 0;
 	let nav_active = "chat";
 	function updateSideBar(type)
 	{
@@ -16,6 +17,7 @@
 		{
 			case 'chat':
 			sidebar_title = "chat";
+			selected_user = 0;
 			break;
 
 			case 'tasks':
@@ -32,6 +34,19 @@
 		}
 	}
 
+	function selected(index)
+	{
+		
+		switch(nav_active)
+		{
+			case 'chat':
+			
+			selected_user = options[index]["id"];
+			
+			break;
+		}
+	}
+
 	function getOptions(type) //send http request in order to get list of options (tasks, workflows , etc...)
 	{
 		
@@ -39,7 +54,7 @@
 		switch(type)
 		{
 			case 'chat':
-			options = [{name: 'Jonh Doe' , color: 'red' , 'id' : 0xff} , {name: 'Jane Doe',  color:'green'}];
+			options = [{"name": 'Jonh Doe' , "status": 'offline' , 'id' : 0xff} , {"name": 'Jane Doe',  "status":'online' , "id" : 0xf1} , {"name" : 'User3' , 'status' : "busy" , "id" : 0xf3}];
 			break;
 
 			case 'tasks':
@@ -101,20 +116,29 @@
 
 	<div>
 		<div style="width:280px;Text-align:left;float:left;background-color:gainsboro;">
-			<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;height:800px;">
+			<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;height:90vh;">
 				<div class="sidebar-content">{sidebar_title}</div>
-				{#each options as option}
-				<div class="sidebar-content">{option.name} <div class="circle" style="background-color:{option.color};"></div></div>
+				{#each options as option , index}
+				<div on:click={() => {selected(index)}}>
+					<div class="sidebar-content">{option.name} <div class="circle" style="background-color:{option.color};"></div></div>
+				</div>
 				{/each}
 				
 			</div>
 		</div>
-		<div style="Text-align:right;width:calc(100% - 280px);float:right;height:800px;">
-			{#if nav_active == "chat"}
-		
+		<div style="Text-align:right;width:calc(100% - 280px);float:right;height:90vh;">
+			{#if nav_active == "chat" && selected_user != 0}
 					<Chat userid = {selected_user}></Chat>
 			
 			{/if}
+
+			{#if nav_active == "tasks"}
+
+					<Tasks>	</Tasks>
+
+			{/if}
+
+		
 </div>
 	
 </main>

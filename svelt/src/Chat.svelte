@@ -1,10 +1,24 @@
 <script>
+import { afterUpdate } from "svelte";
 
 
     export let userid;
     var messages = [];
-
+    var last_id = -1;
     
+    afterUpdate(() => {
+
+        if(last_id != userid)
+        {
+            messages = [];
+            getMessages(0 , 2);
+            console.log("update");
+            last_id = userid;
+        }
+        
+    });
+
+
     /*async*/ function getMessages(depth , n)
     {
        /* var dict = {"token" : "abc" ,
@@ -23,23 +37,31 @@
 
         const awnser = await res.json();
         */
+        let awnser;
+        if(userid == 0xff)  awnser = {0 : {"origin" : "you" , "text" : "User ff"} , 1 : {"origin" : "target" , "text" : "Example of a message"}};
+        if(userid == 0xf1)  awnser = {0 : {"origin" : "you" , "text" : "User f1"} , 1 : {"origin" : "target" , "text" : "Example of a message"}};
+        if(userid == 0xf3)  awnser = {0 : {"origin" : "you" , "text" : "User f3"} , 1 : {"origin" : "target" , "text" : "Example of a message"}};
 
-        const awnser = {0 : {"origin" : "you" , "text" : "hello world"} , 1 : {"origin" : "target" , "text" : "Example of a message"}};
-
+        let c = 0;
+        console.log(awnser.size);
         for(let i=depth+n-1;i>=depth;i--)
         {
-            messages.push(awnser[i]);
+            if(c < Object.keys(awnser).length)
+            messages.push(awnser[i-depth]);
+            else{
+                break;
+            }
+            c++;
         }
         
-        console.log(messages[0]);
-        console.log(messages[1]);
 
     }
 
-    getMessages(0 , 2);
+    
 
      function sendMessage()
     {
+        
         var h = document.getElementById("message-box");
         if(h.value != "")
         {
@@ -60,8 +82,6 @@
             messages = [...messages , {"origin" : "you" , "text" : h.value}];
             h.value = ""; 
         }
-
-        
         
     }
 
