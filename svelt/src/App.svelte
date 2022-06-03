@@ -47,6 +47,36 @@
 		}
 	}
 
+	function decodeColor()
+	{
+		for(let i=0;i<options.length;i++)
+		{
+			switch(nav_active)
+			{
+				case 'chat':
+				if(options[i]["status"] == "offline")
+				{
+					options[i]["color"] = "grey";
+					delete options[i].status;
+				}
+				if(options[i]["status"] == "online")
+				{
+					options[i]["color"] = "green";
+					delete options[i].status;
+				}
+				if(options[i]["status"] == "busy")
+				{
+					options[i]["color"] = "red";
+					delete options[i].status;
+				}
+				break;
+			}
+		}
+
+		console.log(options);
+		options = options;
+	}
+
 	function getOptions(type) //send http request in order to get list of options (tasks, workflows , etc...)
 	{
 		
@@ -55,6 +85,7 @@
 		{
 			case 'chat':
 			options = [{"name": 'Jonh Doe' , "status": 'offline' , 'id' : 0xff} , {"name": 'Jane Doe',  "status":'online' , "id" : 0xf1} , {"name" : 'User3' , 'status' : "busy" , "id" : 0xf3}];
+			decodeColor();
 			break;
 
 			case 'tasks':

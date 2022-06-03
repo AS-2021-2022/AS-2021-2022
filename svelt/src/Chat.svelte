@@ -43,7 +43,6 @@ import { afterUpdate } from "svelte";
         if(userid == 0xf3)  awnser = {0 : {"origin" : "you" , "text" : "User f3"} , 1 : {"origin" : "target" , "text" : "Example of a message"}};
 
         let c = 0;
-        console.log(awnser.size);
         for(let i=depth+n-1;i>=depth;i--)
         {
             if(c < Object.keys(awnser).length)
