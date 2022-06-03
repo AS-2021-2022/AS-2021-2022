@@ -139,10 +139,10 @@ B)
         {
             "status" : "accepted" ,
             "messages" : [{"text" : "hello world" , "origin" : "you"} ,
-                     {"text" : "abcd" , "origin" : "target"} ... {}]
+                     {"text" : "abcd" , "origin" : "target"} ,... , {...}]
         }
     
-   origin is the person origin ID, when the origin is the user itself, origin must have the value "you"
+   origin: Person origin ID, when the origin is the user itself, origin must have the value "you"
 
 #### Errors
    - Invalid target_id
