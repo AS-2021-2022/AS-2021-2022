@@ -44,6 +44,7 @@ B)
     3.0 getFilesList                (returns a brief list of user associated files)
     3.1 getFile                     (when user asks for a file (download))
     3.2 uploadFile                  (when user sends a file)
+    3.3 removeFile		     (remove file from cloud)
 ## 4. Workflows
     4.0 getWorkflows                (returns a brief list of user associated workflows)
     4.1 incrementWorkflow           (when user increments workflow (send file))
@@ -193,8 +194,8 @@ Returns a temporary url to download the selected file.
 	            "type"  : "sendFile" ,
 	            params : 
 	            {
-					"name" : "name of the file"
-				}
+			  "name" : "name of the file"
+		    }
 		}
 File will be sent in http POST.
 #### Server response
@@ -206,6 +207,31 @@ File will be sent in http POST.
 - Invalid file name
 -  File is insecure
 - File is too big
+
+
+
+### 3.3 removeFile
+#### User request
+		{
+	            "token" : "user_token" ,
+	            "type"  : "sendFile" ,
+	            "params" : 
+	            {
+			"file_id" : "file_id"
+		    }
+		}
+
+#### Server response
+		{
+			"status" : "accepted"
+		}
+#### Errors
+- Invalid token
+- Invalid file ID
+
+
+
+
 
 ## 4. Workflows
 ### 4.1 - getWorkflows
