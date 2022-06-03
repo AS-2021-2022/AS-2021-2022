@@ -49,6 +49,7 @@ B)
     4.0 getWorkflows                (returns a brief list of user associated workflows)
     4.1 incrementWorkflow           (when user increments workflow (send file))
     4.2 getWorkflow                 (returns a workflow information)
+    4.3 createWorkflow				(create workflow)
 ## 5. Tasks
     5.0 getTasksList                (returns a brief list of tasks)
     5.1 getTask                     (returns selected task information)
@@ -276,6 +277,21 @@ File will be sent in http POST.
 #### Errors
 - Invalid token
 - User doesn't have permission to advance in this workflow.
+### 4.3 - createWorkflow
+#### User request
+		{
+			"token" : "toke_id" ,
+			"type" : "createWorkflow"
+			"params":
+			{
+				"steps" : [{"id" : "userid" , "description" : "text"} , ... , {...}]
+			}
+		}
+#### Server response
+	{
+		"status" : "accepted"
+	}
+		
 
 ## 5 - Tasks
 ### 5.0 - getTasksList
