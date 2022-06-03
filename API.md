@@ -11,8 +11,6 @@
     }
 }
 ```
-
-//notes
 When "params" field is empty, the server doesn't need to send it.
 
 #### GENERIC SERVER RESPONSE
