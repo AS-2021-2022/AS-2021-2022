@@ -55,7 +55,8 @@ B)
     5.1 getTask                     (returns selected task information)
     5.2 assignTask                    (user creates a task)
 
-
+## 6. Other
+    6.0 decodeID		    (decode ID)
 # detailed description of the API calls
 
 
@@ -235,7 +236,7 @@ File will be sent in http POST.
 
 
 ## 4. Workflows
-### 4.1 - getWorkflows
+### 4.0 - getWorkflows
 #### User request
 
 	{
@@ -257,15 +258,16 @@ File will be sent in http POST.
 #### Errors
 - Invalid token
 
-### 4.2 - incrementWorkflow
+### 4.1 - incrementWorkflow
 #### User request
 
 	{
-		"token" : "toke_id" ,
+		"token" : "token_id" ,
 		"type" : "incrementWorkflow"
 		"params":
 		{
-			"name" : "file_name"
+			"name" : "file_name",
+			"id"   : "workflow_id"
 		}
 	}
 File will be sent in http POST.
@@ -277,6 +279,34 @@ File will be sent in http POST.
 #### Errors
 - Invalid token
 - User doesn't have permission to advance in this workflow.
+
+### 4.2 - getWorkflow
+
+#### User request
+	
+	{
+		"token" : "token_id" ,
+		"type" : "getWorkflow",
+		"params" :
+		{
+			"id" : "workflow_id"
+		}
+	}
+	
+#### Server response
+
+	{
+		"status" : "accepted" ,
+		"name" : "workflow_name" ,
+		"steps" : [{"assignee_id" : "id" , "description" : "description text"} , ... , {}]
+	}
+
+Assignee name can be obtained using 6.0 API call.
+
+#### Errors
+- Invalid token
+- Invalid workflow id
+
 ### 4.3 - createWorkflow
 #### User request
 		{
@@ -363,3 +393,30 @@ priority is an arbitrary string (urgent , ... )
 #### Errors
 - Invalid token
 - Invalid task parameter
+
+## 6 - Other
+### 6.0 - decodeID
+#### User request
+
+This API call should be used whenever user wants to know a string representation of a given ID.
+	{
+		"token" : "token_id" ,
+		"type" : "decodeID"
+		params : {
+			"class" : "..." ,
+			"id" : "..."
+		}
+	}
+	
+class parameter can be one of these: "user" , "task" , "workflow" , "file".
+	
+#### Server response
+	{
+		"status" : "accepted" ,
+		"name" : "decoded name"
+	}
+	
+#### Errors
+- User does not have permission to know this id name. (the server must return "unknown id" if this happens)
+- Invalid token.
+- Unknown id.
