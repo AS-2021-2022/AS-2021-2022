@@ -13,7 +13,7 @@
 ```
 When "params" field is empty, the server doesn't need to send it.
 
-#### GENERIC SERVER RESPONSE
+#### GENERIC SERVER RESPONSEThis API call should be used whenever user wants
 A)
 ```
     {
@@ -399,6 +399,7 @@ priority is an arbitrary string (urgent , ... )
 #### User request
 
 This API call should be used whenever user wants to know a string representation of a given ID.
+
 	{
 		"token" : "token_id" ,
 		"type" : "decodeID"
