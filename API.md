@@ -57,6 +57,7 @@ B)
 
 ## 6. Other
     6.0 decodeID		    (decode ID)
+    6.1 getUserType		    (used to see if the user is a team manager/normal worker/...)
 # detailed description of the API calls
 
 
@@ -298,7 +299,8 @@ File will be sent in http POST.
 	{
 		"status" : "accepted" ,
 		"name" : "workflow_name" ,
-		"steps" : [{"assignee_id" : "id" , "description" : "description text"} , ... , {}]
+		"steps" : [{"assignee_id" : "id" , "description" : "description text"} , ... , {}],
+		"files" : ["file_id1 , file_id2 , ... , file_idn]
 	}
 
 Assignee name can be obtained using 6.0 API call.
@@ -421,3 +423,22 @@ class parameter can be one of these: "user" , "task" , "workflow" , "file".
 - User does not have permission to know this id name. (the server must return "unknown id" if this happens)
 - Invalid token.
 - Unknown id.
+
+
+### 6.1 - getUserType
+#### User request
+
+	{
+		"token" : "token_id" ,
+		"type" : "getUserType"
+	}
+	
+#### Server response
+	
+	{
+		"status" : "accepted" ,
+		"type" : "..." ("TM" , "E" , "A")
+	}
+	
+#### Errors
+- Invalid token
