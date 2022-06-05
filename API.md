@@ -11,7 +11,7 @@
     }
 }
 ```
-When "params" field is empty, the server doesn't need to send it.
+When "params" field is empty, the user doesn't need to send it.
 
 #### GENERIC SERVER RESPONSEThis API call should be used whenever user wants
 A)
