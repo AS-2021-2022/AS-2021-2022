@@ -56,14 +56,23 @@
                 <p>Waiting for server response ...</p>
             {:else }
                 <p></p>
+                
+                <p></p>
+                <div class = "field" style="background-color:rgb(231, 231, 231);">Priority : </div><div class = "field">{parameters["priority"]}</div>
+                <p></p>
+                <div class = "field" style="background-color:rgb(231, 231, 231);">Progress : </div><input type="range" min="0" max="100" value="0">
+                <p></p>
                 <div class = "field" style="background-color:rgb(231, 231, 231);">Start : </div><div class = "field">{parameters["start"]}</div>
                 <div class = "field" style="background-color:rgb(231, 231, 231);">End : </div><div class = "field">{parameters["end"]}</div>
                 <p></p>
-                <div class = "field" style="background-color:rgb(231, 231, 231);">Prioridade : </div><div class = "field">{parameters["priority"]}</div>
-                <p></p>
                 <div class = "field description" >{parameters["description"]}</div>
+                
                 <p></p>
-                <button class = "concludeButton"></button>
+                
+                <p></p>
+                
+                
+                <button class = "concludeButton">Conclude task!</button>
                 
             {/if}
         {:else}
@@ -111,9 +120,40 @@
 
     .concludeButton
     {
-        width:50px;
-        height:20px;
+        width:fit-content;
+        height:fit-content;
         background-color: green;
+    }
+
+        .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    }
+
+    .slider:hover {
+    opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
     }
 
     

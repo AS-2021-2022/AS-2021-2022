@@ -1,10 +1,12 @@
 <script>
 	import Chat from "./Chat.svelte";
 	import userid from "./Chat.svelte";
+	import taskid from "./Tasks.svelte";
 	import Tasks from "./Tasks.svelte";
 	var sidebar_title = "";
 	let options = [];
 	let selected_user = 0;
+	let selected_task = 0;
 	let nav_active = "chat";
 	function updateSideBar(type)
 	{
@@ -22,6 +24,7 @@
 
 			case 'tasks':
 			sidebar_title = "tasks";
+			selected_task = 0;
 			break;
 
 			case 'workflows':
@@ -40,10 +43,10 @@
 		switch(nav_active)
 		{
 			case 'chat':
-			
 			selected_user = options[index]["id"];
-			
 			break;
+			case 'tasks':
+			selected_task = options[index]["id"];
 		}
 	}
 
@@ -89,7 +92,7 @@
 			break;
 
 			case 'tasks':
-			options = [{name: 'Tarefa 1' , color: 'red'} , {name: 'Tarefa 2',  color:'green'}];
+			options = [{name: 'Tarefa 1' , color: 'red' , 'id' : 0x1} , {name: 'Tarefa 2',  color:'green' , 'id' : 0x2}];
 			break;
 
 			case 'workflows':
@@ -163,9 +166,9 @@
 			
 			{/if}
 
-			{#if nav_active == "tasks"}
+			{#if nav_active == "tasks" && selected_task != 0}
 
-					<Tasks>	</Tasks>
+					<Tasks taskid = {selected_task}></Tasks>
 
 			{/if}
 
