@@ -56,12 +56,14 @@
                 <p>Waiting for server response ...</p>
             {:else }
                 <p></p>
-                <div class = "field">{parameters["start"]}</div>
-                <div class = "field">{parameters["end"]}</div>
+                <div class = "field" style="background-color:rgb(231, 231, 231);">Start : </div><div class = "field">{parameters["start"]}</div>
+                <div class = "field" style="background-color:rgb(231, 231, 231);">End : </div><div class = "field">{parameters["end"]}</div>
                 <p></p>
                 <div class = "field" style="background-color:rgb(231, 231, 231);">Prioridade : </div><div class = "field">{parameters["priority"]}</div>
                 <p></p>
                 <div class = "field description" >{parameters["description"]}</div>
+                <p></p>
+                <button class = "concludeButton"></button>
                 
             {/if}
         {:else}
@@ -105,6 +107,13 @@
     .description
     {
         min-height: 200px;
+    }
+
+    .concludeButton
+    {
+        width:50px;
+        height:20px;
+        background-color: green;
     }
 
     
