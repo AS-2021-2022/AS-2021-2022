@@ -359,7 +359,6 @@ Assignee name can be obtained using 6.0 API call.
 #### Server response
 	{
 		"status" : "accepted",
-		"name"   : "taskName",
 		"start" : "creation_date",
 		"end" : "end_date",
 		"priority" : ... ,
