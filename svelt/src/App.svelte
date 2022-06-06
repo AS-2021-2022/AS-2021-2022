@@ -3,10 +3,12 @@
 	import userid from "./Chat.svelte";
 	import taskid from "./Tasks.svelte";
 	import Tasks from "./Tasks.svelte";
-	var sidebar_title = "";
+	import Login from "./Login.svelte";
+
 	let options = [];
 	let selected_user = 0;
 	let selected_task = 0;
+	let logged = false;
 	let nav_active = "chat";
 	function updateSideBar(type)
 	{
@@ -18,21 +20,17 @@
 		switch(type)
 		{
 			case 'chat':
-			sidebar_title = "chat";
 			selected_user = 0;
 			break;
 
 			case 'tasks':
-			sidebar_title = "tasks";
 			selected_task = 0;
 			break;
 
 			case 'workflows':
-			sidebar_title = "workflows";
 			break;
 
 			case 'files':
-			sidebar_title = "files";
 			break;
 		}
 	}
@@ -92,7 +90,7 @@
 			break;
 
 			case 'tasks':
-			options = [{name: 'Tarefa 1' , color: 'red' , 'id' : 0x1} , {name: 'Tarefa 2',  color:'green' , 'id' : 0x2}];
+			options = [{name: 'Tarefa 1' , color: 'red' , 'id' : 1} , {name: 'Tarefa 2',  color:'green' , 'id' : 2}];
 			break;
 
 			case 'workflows':
@@ -113,67 +111,72 @@
 </svelte:head>
 
 <main>
-	
-	<nav class="navbar navbar-expand-md navbar-dark bg-primary active">
-		<a href="/" class="navbar-brand"><i class="bi bi-house"></i></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar6">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="navbar-collapse collapse justify-content-stretch" id="navbar6">
-			<ul class="navbar-nav">
-				
-				<li on:click={() => updateSideBar('chat')} class="nav-item" id="chat">
-					<a class="nav-link" href="#">Chat<i class="bi bi-arrow-right"></i></a>
-				</li>
-				<li on:click={() => updateSideBar('tasks')} class="nav-item" id="tasks">
-					<a class="nav-link " href="#" >Tasks<i class="bi bi-arrow-right"></i></a>
-				</li>
-				<li on:click={() => updateSideBar('workflows')} class="nav-item" id="workflows">
-					<a class="nav-link " href="#">Workflows<i class="bi bi-arrow-right"></i></a>
-				</li>
-				<li on:click={() => updateSideBar('files')} class="nav-item" id="files">
-					<a class="nav-link " href="#">files<i class="bi bi-arrow-right"></i></a>
-				</li>
-			</ul>
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a class="nav-link " href="#"> <i class="bi bi-envelope"></i>  xyz@empresa.pt</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="login">Sign out <i class="bi bi-door-closed"></i></a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-
-	
-
-	<div>
-		<div style="width:280px;Text-align:left;float:left;background-color:gainsboro;">
-			<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;height:90vh;">
-				<div class="sidebar-content">{sidebar_title}</div>
-				{#each options as option , index}
-				<div on:click={() => {selected(index)}}>
-					<div class="sidebar-content">{option.name} <div class="circle" style="background-color:{option.color};"></div></div>
-				</div>
-				{/each}
-				
+	{#if logged === false}
+	<Login bind:logged={logged}></Login>
+	{:else}
+		<nav class="navbar navbar-expand-md navbar-dark bg-primary active">
+			<a href="/" class="navbar-brand"><i class="bi bi-house"></i></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar6">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="navbar-collapse collapse justify-content-stretch" id="navbar6">
+				<ul class="navbar-nav">
+					
+					<li on:click={() => updateSideBar('chat')} class="nav-item" id="chat">
+						<a class="nav-link" href="#">Chat<i class="bi bi-arrow-right"></i></a>
+					</li>
+					<li on:click={() => updateSideBar('tasks')} class="nav-item" id="tasks">
+						<a class="nav-link " href="#" >Tasks<i class="bi bi-arrow-right"></i></a>
+					</li>
+					<li on:click={() => updateSideBar('workflows')} class="nav-item" id="workflows">
+						<a class="nav-link " href="#">Workflows<i class="bi bi-arrow-right"></i></a>
+					</li>
+					<li on:click={() => updateSideBar('files')} class="nav-item" id="files">
+						<a class="nav-link " href="#">files<i class="bi bi-arrow-right"></i></a>
+					</li>
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link " href="#"> <i class="bi bi-envelope"></i>  xyz@empresa.pt</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" on:click={() => {logged = false;}}>Sign out <i class="bi bi-door-closed"></i></a>
+					</li>
+				</ul>
 			</div>
-		</div>
-		<div style="Text-align:right;width:calc(100% - 280px);float:right;height:90vh;">
-			{#if nav_active == "chat" && selected_user != 0}
-					<Chat userid = {selected_user}></Chat>
-			
-			{/if}
-
-			{#if nav_active == "tasks" && selected_task != 0}
-
-					<Tasks taskid = {selected_task}></Tasks>
-
-			{/if}
+		</nav>
 
 		
-</div>
+
+		<div>
+			<div style="width:280px;Text-align:left;float:left;background-color:gainsboro;">
+				<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;height:90vh;">
+					{#each options as option , index}
+					<div on:click={() => {selected(index)}}>
+						<div class="sidebar-content">{option.name} <div class="circle" style="background-color:{option.color};"></div></div>
+					</div>
+					{/each}
+					
+				</div>
+			</div>
+			<div style="Text-align:right;width:calc(100% - 280px);float:right;height:90vh;">
+				{#if nav_active == "chat" && selected_user != 0}
+						<Chat userid = {selected_user}></Chat>
+				
+				
+
+				{:else if nav_active == "tasks" && selected_task != 0}
+
+						<Tasks taskid = {selected_task}></Tasks>
+
+				{/if}
+
+			</div>
+		</div>
+
+	
+	{/if}
+
 	
 </main>
 
@@ -191,7 +194,7 @@
 		background: black;
 	}
 	
-
+	
 	.navbar-nav > li{
   		padding-left:30px;
   		padding-right:30px;
@@ -204,7 +207,8 @@
 
 	}
 	.sidebar-content:hover{
-		background-color: grey;
+		background-color: rgb(171, 171, 171);
+		cursor:pointer;
 	}
 
 	.circle
@@ -215,6 +219,7 @@
 		border-radius: 50%;
 		display: inline-block;
 		float:right;
+		margin-right:10px;
 		
 	}
 

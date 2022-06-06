@@ -1,21 +1,44 @@
 <script>
-
-    let taskid = "";
+    import { afterUpdate } from "svelte";
+    export let taskid;
     let state = "";
+    let last_id = -1;
     if(taskid == undefined) state = "write";
     else{
         state = "read";
     }
+
+    afterUpdate(() => {
+    if(last_id != taskid)
+    {
+        if(taskid == 1)
+    {
+        parameters = {
+            "status" : "accepted",
+            "start" : "6/6 - 15:00",
+            "end" : "7/6 - 14:00",
+            "priority" : "Alta" ,
+            "description" : "Descrição detalhada da tarefa aqui"
+        }
+    }
+    if(taskid == 2)
+    {
+        parameters = {
+            "status" : "accepted",
+            "start" : "5/6 - 15:00",
+            "end" : "6/6 - 14:00",
+            "priority" : "Baixa" ,
+            "description" : "Descrição detalhada da tarefa aqui"
+        }
+    }
+        last_id = taskid;
+    }
+
+    });
     
     let parameters = undefined;
-
-    parameters = {
-        "status" : "accepted",
-        "start" : "6/6 - 15:00",
-        "end" : "7/6 - 14:00",
-        "priority" : "Alta" ,
-        "description" : "Descrição detalhada da tarefa aqui"
-    }
+    console.log(taskid);
+    
 
     async function getTask(id)
     {
@@ -60,7 +83,7 @@
                 <p></p>
                 <div class = "field" style="background-color:rgb(231, 231, 231);">Priority : </div><div class = "field">{parameters["priority"]}</div>
                 <p></p>
-                <div class = "field" style="background-color:rgb(231, 231, 231);">Progress : </div><input type="range" min="0" max="100" value="0">
+                <div class = "field" style="background-color:rgb(231, 231, 231);">Progress : </div><input type="range" min="0" max="100" value="0"><div></div>
                 <p></p>
                 <div class = "field" style="background-color:rgb(231, 231, 231);">Start : </div><div class = "field">{parameters["start"]}</div>
                 <div class = "field" style="background-color:rgb(231, 231, 231);">End : </div><div class = "field">{parameters["end"]}</div>
@@ -72,7 +95,11 @@
                 <p></p>
                 
                 
-                <button class = "concludeButton">Conclude task!</button>
+                <button class = "concludeButton" on:click={() => {
+
+                    console.log("remove task");
+
+                }}>Conclude task!</button>
                 
             {/if}
         {:else}
@@ -95,6 +122,7 @@
         width : 40%;
         margin: 0 auto;
         height: fit-content;
+        padding-bottom:50px;
         margin-top:100px;
         background-color:rgb(231, 231, 231);
         min-height:500px;
@@ -122,7 +150,12 @@
     {
         width:fit-content;
         height:fit-content;
-        background-color: green;
+        background-color: rgb(201, 201, 201);
+    }
+
+    .concludeButton:hover
+    {
+        background-color: rgb(171, 171, 171);
     }
 
         .slider {
