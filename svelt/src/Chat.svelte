@@ -109,7 +109,7 @@ import { afterUpdate } from "svelte";
     main
     {
         background-color: #e5e5f7;
-        background: repeating-linear-gradient( -45deg, #444cf7, #444cf7 7.5px, #e5e5f7 7.5px, #e5e5f7 37.5px );
+        
         width: 100%;
         display: flex;
         flex-direction: column;
