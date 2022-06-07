@@ -104,6 +104,36 @@
             {/if}
         {:else}
             <!--Task creation here-->
+            <p></p>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">Name: </div><input type="text" id="name" name="name"><br>
+            <p></p>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">Is meeting: </div><input type="checkbox" id="meeting" name="meeting" value="isMeeting">
+            <p></p>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">Start date: </div><input id="startDate" type="date"><div></div>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">Start time: </div><input type="time" id="startTime" name="startTime"><div></div>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">End date: </div><input id="endDate" type="date"><div></div>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">End time: </div><input type="time" id="endTime" name="endTime"><div></div>
+            <p></p>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">Priority: </div><select name="priority" id="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select><div></div>
+            <p></p>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">Assignee: </div><input type="text" id="assignee" name="assignee" placeholder="email@nsn.pt">
+            <p></p>
+            <div class = "field description" ><textarea id="w3review" name="w3review" rows="5" cols="25" placeholder="Description"></textarea></div>
+            
+            <p></p>
+            
+            <p></p>
+            
+            
+            <button class = "concludeButton" on:click={() => {
+
+                console.log("remove task");
+
+            }}>Submit task!</button>
 
 
         {/if}
