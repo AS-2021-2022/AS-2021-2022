@@ -8,6 +8,9 @@
 	import {logged} from "./stores/store.js";
 	import { get } from "svelte/store";
 
+
+	
+
 	let _logged;
 
 	logged.subscribe(value => {

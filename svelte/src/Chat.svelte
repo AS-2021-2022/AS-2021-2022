@@ -1,6 +1,8 @@
 <script>
 import { afterUpdate } from "svelte";
-
+import {token} from "./stores/store.js";
+import {callAPI} from "./global.js";
+import { get } from "svelte/store";
 
     export let userid;
     var messages = [];
@@ -19,67 +21,51 @@ import { afterUpdate } from "svelte";
     });
 
 
-    /*async*/ function getMessages(depth , n)
+    async function getMessages(depth , n)
     {
-       /* var dict = {"token" : "abc" ,
-                    "type"   : "getMessages",
-                    "params" : {
-                        "userid" : userid ,
-                        "depth"    : depth ,
-                        "count"   : n
-                    }
-                };
+        var dict = {"token" : get(token), "type" : "getMessages" , "params" : {
+            "userid" : userid, "depth" : depth , "count" : count}};
 
-        const res = await fetch('https://localhost:5000' , {
-            method: 'POST',
-            body : JSON.stringify(dict) 
-        });
+        let awnser = callAPI(dict);
 
-        const awnser = await res.json();
-        */
-        let awnser;
-        if(userid == 0xff)  awnser = {0 : {"origin" : "you" , "text" : "User ff"} , 1 : {"origin" : "target" , "text" : "Example of a message"}};
-        if(userid == 0xf1)  awnser = {0 : {"origin" : "you" , "text" : "User f1"} , 1 : {"origin" : "target" , "text" : "Example of a message"}};
-        if(userid == 0xf3)  awnser = {0 : {"origin" : "you" , "text" : "User f3"} , 1 : {"origin" : "target" , "text" : "Example of a message"}};
-
-        let c = 0;
-        for(let i=depth+n-1;i>=depth;i--)
+        if(awnser["status"] == "accepted")
         {
-            if(c < Object.keys(awnser).length)
-            messages.push(awnser[i-depth]);
-            else{
-                break;
+            for(let i=depth+n-1;i>=depth;i--)
+            {
+                if(c < Object.keys(awnser["messages"]).length)
+                messages.push(awnser["messages"][i-depth]);
+                else{
+                    break;
+                }
             }
-            c++;
         }
-        
-
     }
 
     
 
-     function sendMessage()
+    async function sendMessage()
     {
-        
         var h = document.getElementById("message-box");
+        
         if(h.value != "")
         {
-
-            var dict = {"token" : "abc" ,
+            var dict = {"token" : get(token) ,
                     "type"  : "sendMessage" ,
                     "params": {
                         "userid" :   userid ,
                         "message" : h.value
                     }
                 };
+            h.value = "sending ...";
+            
+            let awnser = callAPI(dict);
                    
-            /*const res = await fetch('https://localhost:5000' , {
-                method: 'POST',
-                body : JSON.stringify(dict)
-            });
-            */
-            messages = [...messages , {"origin" : "you" , "text" : h.value}];
-            h.value = ""; 
+            if(awnser["status"] == "accepted")
+            {
+                messages = [...messages , {"origin" : "you" , "text" : h.value}];
+                h.value = ""; 
+            }
+           
         }
         
     }
