@@ -1,12 +1,11 @@
 <script>
 
-  export let logged = false;
 
-
+	import {token , logged} from './stores/store.js';
 
 async function login () {
 
-    let user = document.getElementById("user").value;
+    /*let user = document.getElementById("user").value;
     let pass = document.getElementById("pass").value;
 		const res = await fetch('https://link.tld/login?username=' + user + '&password=' + pass, {
 			method: 'GET'
@@ -15,11 +14,21 @@ async function login () {
 		const json = await res.json()
 		result = JSON.stringify(json)
 
+		*/
+	//let result = {"status" : "rejected"};
+	let result = {"status" : "accepted" , "token" : 0xf};
+
     if(result["status"] == "accepted")
     {
-      logged = true;
+	  token.set(result["token"]);
+	  logged.set(true);
     }
+
+	if(result["status"] == "rejected")
+	{
+		console.log("unable to login");
 	}
+}
 
 </script>
 

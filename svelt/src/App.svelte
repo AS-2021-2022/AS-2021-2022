@@ -4,11 +4,24 @@
 	import taskid from "./Tasks.svelte";
 	import Tasks from "./Tasks.svelte";
 	import Login from "./Login.svelte";
+	import Workflow from "./Workflow.svelte";
+	import {logged} from "./stores/store.js";
+	import { get } from "svelte/store";
 
+	let _logged;
+
+	logged.subscribe(value => {
+		_logged = value;
+	});
+	
 	let options = [];
-	let selected_user = 0;
-	let selected_task = 0;
-	let logged = false;
+
+	let selected_user	  = 0;
+	let selected_task 	  = 0;
+	let selected_workflow = 0;
+
+
+
 	let nav_active = "chat";
 	function updateSideBar(type)
 	{
@@ -28,6 +41,7 @@
 			break;
 
 			case 'workflows':
+			selected_workflow = 0;
 			break;
 
 			case 'files':
@@ -45,6 +59,9 @@
 			break;
 			case 'tasks':
 			selected_task = options[index]["id"];
+			break;
+			case 'workflows':
+			selected_workflow = options[index]["id"];
 		}
 	}
 
@@ -94,10 +111,12 @@
 			break;
 
 			case 'workflows':
-			options = [{name: 'Workflow 1' , color: 'red'} , {name: 'Workflow 2',  color:'green'}];
+			options = [{name: 'Workflow 1' , 'id' : 1 , color: 'red'} , {name: 'Workflow 2', 'id' : 2 , color:'green'}];
 			break;
 		}
 	}
+
+
 	
 	
 </script>
@@ -111,8 +130,8 @@
 </svelte:head>
 
 <main>
-	{#if logged === false}
-	<Login bind:logged={logged}></Login>
+	{#if _logged === false}
+	<Login></Login>
 	{:else}
 		<nav class="navbar navbar-expand-md navbar-dark bg-primary active">
 			<a href="/" class="navbar-brand"><i class="bi bi-house"></i></a>
@@ -140,7 +159,7 @@
 						<a class="nav-link " href="#"> <i class="bi bi-envelope"></i>  xyz@empresa.pt</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" on:click={() => {logged = false;}}>Sign out <i class="bi bi-door-closed"></i></a>
+						<a class="nav-link" on:click={() => {logged.set(false);}}>Sign out <i class="bi bi-door-closed"></i></a>
 					</li>
 				</ul>
 			</div>
@@ -168,6 +187,11 @@
 				{:else if nav_active == "tasks" && selected_task != 0}
 
 						<Tasks taskid = {selected_task}></Tasks>
+
+				
+
+				{:else if nav_active == "workflows" && selected_workflow != 0}
+						<Workflow workflowid = {selected_workflow}></Workflow>
 
 				{/if}
 
