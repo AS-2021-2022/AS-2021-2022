@@ -107,12 +107,8 @@
             <p></p>
             <div class = "field" style="background-color:rgb(231, 231, 231);">Name: </div><input type="text" id="name" name="name"><br>
             <p></p>
-            <div class = "field" style="background-color:rgb(231, 231, 231);">Is meeting: </div><input type="checkbox" id="meeting" name="meeting" value="isMeeting">
-            <p></p>
-            <div class = "field" style="background-color:rgb(231, 231, 231);">Start date: </div><input id="startDate" type="date"><div></div>
-            <div class = "field" style="background-color:rgb(231, 231, 231);">Start time: </div><input type="time" id="startTime" name="startTime"><div></div>
-            <div class = "field" style="background-color:rgb(231, 231, 231);">End date: </div><input id="endDate" type="date"><div></div>
-            <div class = "field" style="background-color:rgb(231, 231, 231);">End time: </div><input type="time" id="endTime" name="endTime"><div></div>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">Start: </div><input id="startDate" type="datetime-local"><div></div>
+            <div class = "field" style="background-color:rgb(231, 231, 231);">End: </div><input id="endDate" type="datetime-local"><div></div>
             <p></p>
             <div class = "field" style="background-color:rgb(231, 231, 231);">Priority: </div><select name="priority" id="priority">
                 <option value="low">Low</option>
