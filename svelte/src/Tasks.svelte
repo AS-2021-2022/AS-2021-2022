@@ -3,10 +3,7 @@
     export let taskid;
     let state = "";
     let last_id = -1;
-    if(taskid == undefined) state = "write";
-    else{
-        state = "read";
-    }
+    
 
     let parameters = undefined;
 
@@ -16,7 +13,13 @@
 
         if(last_id != taskid)
         {
-            parameters = getTask(taskid);
+            if(taskid == undefined) state = "write";
+            else{
+                state = "read";
+                parameters = getTask(taskid);
+            }
+            
+           
             /*if(taskid == 1)
             {
             parameters = {

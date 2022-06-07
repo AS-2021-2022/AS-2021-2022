@@ -5,7 +5,7 @@
 	import Tasks from "./Tasks.svelte";
 	import Login from "./Login.svelte";
 	import Workflow from "./Workflow.svelte";
-	import {logged} from "./stores/store.js";
+	import {logged , role} from "./stores/store.js";
 	import { get } from "svelte/store";
 
 
@@ -173,7 +173,11 @@
 		<div>
 			<div style="width:280px;Text-align:left;float:left;background-color:gainsboro;">
 				<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;height:90vh;">
+					{#if get(role) == "manager" && nav_active == "tasks"}
+						<div class = "sidebar-content" on:click={() => {selected_task = undefined}}>Create Task + </div>
+					{/if}
 					{#each options as option , index}
+					
 					<div on:click={() => {selected(index)}}>
 						<div class="sidebar-content">{option.name} <div class="circle" style="background-color:{option.color};"></div></div>
 					</div>
