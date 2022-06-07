@@ -6,16 +6,10 @@
 
 async function login () {
 
-
     let user = document.getElementById("user").value;
     let pass = document.getElementById("pass").value;
-		const res = await fetch('https://localhost:5000', {
-			method: 'POST',
-			body: JSON.stringify({
-        "type" : "login",
-        "username" : user,
-        "password" : pass
-			})
+		const res = await fetch('https://link.tld/login?username=' + user + '&password=' + pass, {
+			method: 'GET'
 		})
 		
 		const json = await res.json()
@@ -39,7 +33,7 @@ async function login () {
           <input type="password" class="form-control" id="pass" placeholder="Password" required=""/>      
 
           <button class="btn btn-lg btn-primary btn-block" on:click={()=>{login();}}>Login</button>   
-        </div>
+		</div>
       </div>
 </main>
 
