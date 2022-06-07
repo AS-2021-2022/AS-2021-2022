@@ -302,6 +302,7 @@ File will be sent in http POST.
 	{
 		"status" : "accepted" ,
 		"name" : "workflow_name" ,
+		"progress" : CURRENT_STEP,
 		"steps" : [{"assignee_id" : "id" , "description" : "description text"} , ... , {}],
 		"files" : ["file_id1 , file_id2 , ... , file_idn]
 	}
