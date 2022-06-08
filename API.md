@@ -319,7 +319,8 @@ Assignee name can be obtained using 6.0 API call.
 			"token" : "toke_id" ,
 			"type" : "createWorkflow"
 			"params":
-			{
+			{	
+				"name" : "workflow_name",
 				"steps" : [{"id" : "userid" , "description" : "text"} , ... , {...}]
 			}
 		}
