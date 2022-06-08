@@ -11,7 +11,7 @@ async function login () {
 	
 	const url = "https://tranquil-brook-75958.herokuapp.com/login?" + "username=" + user + "&password="+pass;
 		
-	const parameters = {'method' : 'GET' , "Access-Control-Allow-Origin" : "*"};
+	const parameters = {'method' : 'GET'};
 
 
 	let result = await fetch(url , parameters);
