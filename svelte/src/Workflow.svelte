@@ -4,7 +4,21 @@
     export let workflowid;
     var last_id = -1;
 
+    const popovers = []
 
+    function showPopover(index) {
+        try {
+            popovers[index].show()
+        }
+        catch {
+            const exampleEl = document.getElementById('popover'+index)
+            const popover = new bootstrap.Popover(exampleEl)
+            popovers[index] = popover
+            popover.show()
+        }
+    }
+
+    
     afterUpdate(() => {
     
     if(last_id != workflowid)
@@ -17,7 +31,7 @@
     function getWorkflow()
     {
         return {"status" : "accepted" , "name" : "workflow name" , "progress" : 1 ,
-        "steps" : [{"assignee_id" : "id" , "description" : "description text"} , {"assignee_id" : "id2" , "description" : "DESC2"}]};
+        "steps" : [{"assignee_id" : "id" , "description" : "description text"} , {"assignee_id" : "id2" , "description" : "DESC2"}, {"assignee_id" : "id2" , "description" : "DESC2"}, {"assignee_id" : "id2" , "description" : "DESC2"}, {"assignee_id" : "id2" , "description" : "DESC2"}, {"assignee_id" : "id2" , "description" : "DESC2"}, {"assignee_id" : "id2" , "description" : "DESC2"}, ]};
     }
 
     let apiResponse = getWorkflow();
@@ -32,25 +46,20 @@
     <div class = "box">
 
         {#each apiResponse["steps"] as step , index}
-            <div class = "step">
-                <div class = "description">{step["description"]}</div>
+            <div style="display: inline-block">
                 {#if index < apiResponse["progress"]}
-                    <div class = "circle" style="background-color:greenyellow"></div>
+                
+                <a tabindex="0" id="popover{index}" class="btn btn-lg btn-success" role="button" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus" title="Iteração {index}" on:click={() => showPopover(index)} data-bs-content="{step.description}">{index}</a>
                 {:else}
                 
-                <div class = "circle" style="background-color:red"></div>
-                {/if}
-                    <div>-></div>
-
+                
+                <a tabindex="0" id="popover{index}" class="btn btn-lg btn-danger" role="button" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus" title="Iteração {index}" on:click={() => showPopover(index)} data-bs-content="{step.description}">{index}</a>{/if}
             </div>
+            <div style="display: inline-block">>>>>></div>
 
             
         {/each}
-
-
-    </div>
-    
-
+        </div>
 
 </main>
 
