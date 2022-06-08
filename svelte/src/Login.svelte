@@ -1,22 +1,22 @@
 <script>
 
-
 	import {token , logged} from './stores/store.js';
+
+
 
 async function login () {
 
-    /*let user = document.getElementById("user").value;
+    let user = document.getElementById("user").value;
     let pass = document.getElementById("pass").value;
-		const res = await fetch('https://link.tld/login?username=' + user + '&password=' + pass, {
-			method: 'GET'
-		})
+	
+	const url = "https://tranquil-brook-75958.herokuapp.com/login?" + "username=" + user + "&password="+pass;
 		
-		const json = await res.json()
-		result = JSON.stringify(json)
+	const parameters = {'method' : 'GET' , "Access-Control-Allow-Origin" : "*"};
 
-		*/
-	//let result = {"status" : "rejected"};
-	let result = {"status" : "accepted" , "token" : 0xf};
+
+	let result = await fetch(url , parameters);
+
+
 
     if(result["status"] == "accepted")
     {
