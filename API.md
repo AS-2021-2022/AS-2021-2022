@@ -442,7 +442,7 @@ class parameter can be one of these: "user" , "task" , "workflow" , "file".
 	
 	{
 		"status" : "accepted" ,
-		"type" : "..." ("TM" , "E" , "A")
+		"type" : "..." ("TEAM_MANAGER" , "EMPLOYEE" , "ADMIN")
 	}
 	
 #### Errors
