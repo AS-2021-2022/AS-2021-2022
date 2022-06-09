@@ -154,7 +154,6 @@ B)
 #### Errors
    - Invalid target_id
    - Invalid token
-   - 'depth' or 'n' value out of bounds.
 
 ## 3 - Files
 ### 3.0 - getFilesList
