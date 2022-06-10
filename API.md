@@ -79,7 +79,8 @@ B)
  #### Server response
         {
             "status" : "accepted" ,
-            "token" : "server_token"  
+            "token" : "server_token",
+	    "email" : "user_email"
         }
 
 ## 2. Chat
