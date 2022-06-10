@@ -80,7 +80,7 @@ B)
         {
             "status" : "accepted" ,
             "token" : "server_token",
-	    "email" : "user_email"
+            "email" : "user_email"
         }
 
 ## 2. Chat
