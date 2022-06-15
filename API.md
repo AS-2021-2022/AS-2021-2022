@@ -401,6 +401,27 @@ priority is an arbitrary string (urgent , ... )
 - Invalid token
 - Invalid task parameter
 
+
+### 5.3 - concludeTask
+#### User request
+	{
+		"token" : "token_id" ,
+		"type" : "concludeTask",
+		"params" : 
+		{
+			"id": "task_id"
+		}
+	}
+#### Server response
+	{
+		"status" : "accepted"
+	}
+
+
+#### Errors
+- Invalid token
+- Invalid task id
+
 ## 6 - Other
 ### 6.0 - decodeID
 #### User request
